@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculateur de Fraction de Filtration</title>
+    <style>
+        /* ...styles existants... */
+          body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #faebd7;
+        }
+
+        .container {
+            width: 80%;
+            max-width: 600px;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .input-group {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        label {
+            width: 100%;
+            margin-bottom: 5px;
+        }
+
+        input {
+            width: 100%;
+            text-align: right;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            color: #ffffff;
+            font-weight: bold;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        .resultat {
+            margin-top: 20px;
+        }
+
+        @media (min-width: 480px) {
+            label {
+                width: 60%;
+            }
+
+            input {
+                width: 30%;
+            }
+        }
+      footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    font-size: 12px;
+    text-align: center;
+    margin-top: 20px;
+    background-color: #f8f9fa;
+    padding: 10px;
+}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Calculateur de Fraction de Filtration en Hémofiltration Continue</h1>
+        <form id="calculateur">
+            <div class="input-group">
+                <label for="debitPPS">Débit PPS (ml/h):</label>
+                <input type="number" id="debitPPS" step="any" min="0" required>
+            </div>
+            <div class="input-group">
+                <label for="debitReinjection">Débit de réinjection (ml/h):</label>
+                <input type="number" id="debitReinjection" step="any" min="0" required>
+            </div>
+            <div class="input-group">
+                <label for="prelevementPatient">Prélèvement patient (ml/h):</label>
+                <input type="number" id="prelevementPatient" step="any" min="0" value="0">
+            </div>
+            <div class="input-group">
+                <label for="debitSang">Débit sang (ml/min):</label>
+                <input type="number" id="debitSang" step="any" min="0" required>
+            </div>
+            <button type="button" id="calculer" onclick="verifierChamps()">Calculer</button>
+        </form>
+        <div class="resultat">
+            <h2>Résultat:</h2>
+            <p id="resultatFractionFiltration"></p>
+        </div>
+    </div>
+  
+    <footer>
+    Copyright Dr EVEZARD A. <br>
+    L'utilisation clinique de ce calculateur entraîne la responsabilité exclusive de l'utilisateur.
+</footer>
+
+    <script>
+    function verifierChamps() {
+        var debitPPS = document.getElementById("debitPPS");
+        var debitReinjection = document.getElementById("debitReinjection");
+        var prelevementPatient = document.getElementById("prelevementPatient");
+        var debitSang = document.getElementById("debitSang");
+
+        if (debitPPS.value === "" || debitReinjection.value === "" || debitSang.value === "") {
+            alert("Veuillez remplir tous les champs requis (Débit PPS, Débit de réinjection, Débit sang).");
+        } else {
+            calculerFractionFiltration();
+        }
+    }
+
+    function calculerFractionFiltration() {
+        var debitPPS = parseFloat(document.getElementById("debitPPS").value);
+        var debitReinjection = parseFloat(document.getElementById("debitReinjection").value);
+        var prelevementPatient = parseFloat(document.getElementById("prelevementPatient").value);
+        var debitSang = parseFloat(document.getElementById("debitSang").value);
+
+        // Convertir le débit sang de ml/min en ml/h
+        var debitSangHeure = debitSang * 60;
+
+        // Calculer la fraction de filtration
+        var fractionFiltration = (debitPPS + debitReinjection + prelevementPatient) / (debitSangHeure + debitPPS);
+
+        // Convertir la fraction de filtration en pourcentage
+        var fractionFiltrationPourcentage = fractionFiltration * 100;
+
+        // Afficher le résultat
+        document.getElementById("resultatFractionFiltration").innerHTML = fractionFiltrationPourcentage.toFixed(2) + " %";
+    }
+</script>
+</body>
+</html>
