@@ -4,16 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculateur de Fraction de Filtration</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
     <style>
-        /* ...styles existants... */
-          body {
+        body {
             font-family: Arial, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
-            background-color: #faebd7;
+            background-color: #FAEBD7; /* White antique color */
         }
 
         .container {
@@ -30,20 +37,15 @@
         }
 
         .input-group {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
             margin-bottom: 10px;
         }
 
         label {
-            width: 100%;
             margin-bottom: 5px;
         }
 
         input {
-            width: 100%;
-            text-align: right;
+            text-align: center;
         }
 
         button {
@@ -65,60 +67,51 @@
             margin-top: 20px;
         }
 
-        @media (min-width: 480px) {
-            label {
-                width: 60%;
-            }
-
-            input {
-                width: 30%;
-            }
+        footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            font-size: 12px;
+            text-align: center;
+            margin-top: 20px;
+            background-color: #f8f9fa;
+            padding: 10px;
         }
-      footer {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    font-size: 12px;
-    text-align: center;
-    margin-top: 20px;
-    background-color: #f8f9fa;
-    padding: 10px;
-}
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Calculateur de Fraction de Filtration en Hémofiltration Continue</h1>
+        <h1 class="text-center">Calculateur de Fraction de Filtration en Hémofiltration Continue</h1>
         <form id="calculateur">
-            <div class="input-group">
+            <div class="form-group">
                 <label for="debitPPS">Débit PPS (ml/h):</label>
-                <input type="number" id="debitPPS" step="any" min="0" required>
+                <input type="number" id="debitPPS" class="form-control" step="any" min="0" required>
             </div>
-            <div class="input-group">
+            <div class="form-group">
                 <label for="debitReinjection">Débit de réinjection (ml/h):</label>
-                <input type="number" id="debitReinjection" step="any" min="0" required>
+                <input type="number" id="debitReinjection" class="form-control" step="any" min="0" required>
             </div>
-            <div class="input-group">
+            <div class="form-group">
                 <label for="prelevementPatient">Prélèvement patient (ml/h):</label>
-                <input type="number" id="prelevementPatient" step="any" min="0" value="0">
+                <input type="number" id="prelevementPatient" class="form-control" step="any" min="0" value="0">
             </div>
-            <div class="input-group">
+            <div class="form-group">
                 <label for="debitSang">Débit sang (ml/min):</label>
-                <input type="number" id="debitSang" step="any" min="0" required>
+                <input type="number" id="debitSang" class="form-control" step="any" min="0" required>
             </div>
-            <button type="button" id="calculer" onclick="verifierChamps()">Calculer</button>
+            <button type="button" class="btn btn-success btn-block" id="calculer" onclick="verifierChamps()">Calculer</button>
         </form>
-        <div class="resultat">
-            <h2>Résultat:</h2>
-            <p id="resultatFractionFiltration"></p>
+        <div class="resultat mt-3">
+            <h2>Résultat:
+            <p id="resultatFractionFiltration"></p></h2>
         </div>
     </div>
   
-    <footer>
+    <footer class="text-center bg-light py-3 mt-3">
     Copyright Dr EVEZARD A. <br>
     L'utilisation clinique de ce calculateur entraîne la responsabilité exclusive de l'utilisateur.
-</footer>
+    </footer>
 
     <script>
     function verifierChamps() {
@@ -133,8 +126,7 @@
             calculerFractionFiltration();
         }
     }
-
-    function calculerFractionFiltration() {
+function calculerFractionFiltration() {
         var debitPPS = parseFloat(document.getElementById("debitPPS").value);
         var debitReinjection = parseFloat(document.getElementById("debitReinjection").value);
         var prelevementPatient = parseFloat(document.getElementById("prelevementPatient").value);
